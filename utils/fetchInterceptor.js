@@ -16,6 +16,10 @@
       try {
         const data = await response.clone().json();
         stashListener.dispatchEvent(new CustomEvent('response', { detail: data }));
+
+        if (data.data.configuration) {
+          stashListener.dispatchEvent(new CustomEvent('configuration', { detail: data.data.configuration }));
+        }
       }
       catch (e) {
         console.error('Error parsing JSON:', e);

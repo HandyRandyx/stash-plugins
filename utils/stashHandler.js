@@ -4,7 +4,8 @@ const stash = {
   movies: {},
   performers: {},
   scenes: {},
-  studios: {}
+  studios: {},
+  userSettings: {}
 };
 
 stashListener.addEventListener('response', (event) => {
@@ -22,6 +23,10 @@ stashListener.addEventListener('response', (event) => {
   }
 
   processOtherData(event.detail);
+});
+
+stashListener.addEventListener('configuration', (event) => {
+  stash.userSettings = event.detail.plugins ?? {};
 });
 
 function processData(findKey, dataKey) {
