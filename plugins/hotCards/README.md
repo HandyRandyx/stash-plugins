@@ -28,27 +28,29 @@ _[criterion]\_[value]\_[style]\_[gradient-opts]\_[border-opts]_
 
 <br />
 
-**criterion**: `<criterion>`
+1. **criterion**: `<criterion>`
 
-`t` for tag-based, `r` for rating-based,`d` for disabled. You can also leave it `<empty>` and it will grab the global value of the _Tag ID_ or _Rating Threshold_ as configured.
+    `t` for tag-based, `r` for rating-based,`d` for disabled. You can also leave it `<empty>` and it will grab the global value of the _Tag ID_ or _Rating Threshold_ as configured.
 
-**value**: `<value>`
+2. **value**: `<value>`
 
-Specific value for Tag ID or Rating Threshold.
+    Specific value for Tag ID or Rating Threshold.
 
-**style**: `<color, color, color, ...>` (comma separated)
+3. **style**: `<color, color, color, ...>` (comma separated)
 
-- Fixed color: **#5ff2a2**
-- Style preset: **hot**
-- Gradient: **#ef1313,#3bd612,...** (Hex color codes, color names)
+    * Fixed color: **#5ff2a2**
+    * Style preset: **hot**
+    * Gradient: **#ef1313,#3bd612,...** (Hex color codes, color names)
 
-**gradient_opts**: `<gradient type>,<gradient angle>,<gradient animation>` (comma separated)
+4. **gradient_opts**: `<gradient type>,<gradient angle>,<gradient animation>` (comma separated)
 
-Example: **linear,35deg,4s alternate infinite**
+    Example: **linear,35deg,4s alternate infinite**
 
-**border_opts**: `<border color>,<border animation>` (comma separated)
+5. **border_opts**: `<border color>,<border animation>` (comma separated)
 
-Example: **#ff0000,2s ease infinite**
+    Example: **#ff0000,2s ease infinite**
+
+<br />
 
 **Note**: _It is recommended to refresh the page once you are done configuring for the changes to take effect and the previous style to be rewritten._
 
