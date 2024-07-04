@@ -50,7 +50,7 @@ Example: **#ff0000,2s ease infinite**
 
 **Note**: _It is recommended to refresh the page once you are done configuring for the changes to take effect and the previous style to be rewritten._
 
-### Examples
+## Examples
 
 **Style Preset**:
 
