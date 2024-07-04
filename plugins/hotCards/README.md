@@ -26,8 +26,6 @@ _[criterion]\_[value]\_[style]\_[gradient-opts]\_[border-opts]_
 
 **Important**: If you have previously installed the plugin, after updating to `1.1.0`, be sure to update your settings from the old boolean format to the new string format. Refresh the page for the changes to take effect.
 
-<br />
-
 1. **criterion**: `<criterion>`
 
     `t` for tag-based, `r` for rating-based,`d` for disabled. You can also leave it `<empty>` and it will grab the global value of the _Tag ID_ or _Rating Threshold_ as configured.
