@@ -392,9 +392,9 @@
     hover_opts,
     card_opts
   ) {
-    const { gradient, border } = preset;
+    const { gradient, hover } = preset;
     const { angle, animation } = gradient_opts;
-    const { color: borderColor, animation: borderAnimation } = hover_opts;
+    const { color: hoverColor, animation: hoverAnimation } = hover_opts;
 
     // Update gradient options with preset defaults if not provided
     const updatedGradientOpts = {
@@ -403,18 +403,18 @@
       animation: animation || gradient.animation,
     };
 
-    // Update border options with preset defaults if not provided
-    const updatedBorderOpts = {
+    // Update hover options with preset defaults if not provided
+    const updatedHoverOpts = {
       color:
-        borderColor !== DEFAULTS.hover_opts.color ? borderColor : border.color,
-      animation: borderAnimation || border.animation,
+        hoverColor !== DEFAULTS.hover_opts.color ? hoverColor : hover.color,
+      animation: hoverAnimation || hover.animation,
     };
 
     return applyCustomGradientStyle(
       card,
       gradient.colors,
       updatedGradientOpts,
-      updatedBorderOpts,
+      updatedHoverOpts,
       card_opts
     );
   }
@@ -423,7 +423,7 @@
    * Apply a fixed color style.
    */
   function applyFixedColorStyle(card, color, hover_opts, card_opts) {
-    setBorder(card, hover_opts.color, hover_opts.animation);
+    setHoverStyleProperties(card, hover_opts.color, hover_opts.animation);
     return getHotCardPseudoElementString(card, card_opts, color);
   }
 
@@ -439,17 +439,17 @@
   ) {
     const { type, angle, animation } = gradient_opts;
     const gradient = getGradient(type, angle, colors);
-    setBorder(card, hover_opts.color, hover_opts.animation);
+    setHoverStyleProperties(card, hover_opts.color, hover_opts.animation);
     return getHotCardPseudoElementString(card, card_opts, gradient, animation);
   }
 
-  function setBorder(card, color, animation) {
+  function setHoverStyleProperties(card, color, animation) {
     const animationStr = animation ? `pulse ${animation}` : "";
     document
       .querySelectorAll(`.hot-${card.class} > .hot-border`)
-      .forEach((borderCard) => {
-        borderCard.style.setProperty("--border-color", color);
-        borderCard.style.animation = animationStr;
+      .forEach((hotBorderCard) => {
+        hotBorderCard.style.setProperty("--hover-color", color);
+        hotBorderCard.style.animation = animationStr;
       });
   }
 
@@ -501,8 +501,8 @@
   }
 
   function createCardStyle(
-    borderColor,
-    borderAnimation,
+    hoverColor,
+    hoverAnimation,
     gradientType,
     gradientAngle,
     gradientColors,
@@ -510,9 +510,9 @@
     filter
   ) {
     return {
-      border: {
-        color: borderColor,
-        animation: borderAnimation,
+      hover: {
+        color: hoverColor,
+        animation: hoverAnimation,
       },
       gradient: {
         type: gradientType,
