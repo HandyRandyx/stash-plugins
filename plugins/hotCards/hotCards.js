@@ -13,9 +13,13 @@
       angle: "0deg",
       animation: "",
     },
-    border_opts: {
+    hover_opts: {
       color: "transparent",
       animation: "",
+    },
+    card_opts: {
+      fill: true,
+      opacity: 80,
     },
   };
   const CRITERIA = { tag: "t", rating: "r", disabled: "d" };
@@ -50,6 +54,12 @@
     gold: getGoldStylePreset(),
   };
 
+  /**
+   * Element to inject custom CSS styles.
+   */
+  const styleElement = document.createElement("style");
+  document.head.appendChild(styleElement);
+
   const isTagBased = TAG_ID?.length;
   const isRatingBased = RATING_THRESHOLD !== 0;
   const isTagOrRatingBased = isTagBased || isRatingBased;
@@ -81,9 +91,13 @@
         "angle",
         "animation",
       ]),
-      border_opts: parseSegment(segments[4], DEFAULTS.border_opts, [
+      hover_opts: parseSegment(segments[4], DEFAULTS.hover_opts, [
         "color",
         "animation",
+      ]),
+      card_opts: parseSegment(segments[5], DEFAULTS.card_opts, [
+        "fill",
+        "opacity",
       ]),
     };
   }
@@ -324,35 +338,63 @@
    * Sets the style of the hot card based on the user's configuration.
    */
   function setHotCardStyling(card) {
-    const { style, gradient_opts, border_opts } = card.config;
+    const { style, gradient_opts, hover_opts, card_opts } = card.config;
     const colors = style.split(INNER_SEPARATOR).map((color) => color.trim());
-    const styleElement = document.createElement("style");
 
     const pseudoElementStyle =
       colors.length === 1
-        ? applySingleColorStyle(card, colors[0], gradient_opts, border_opts)
-        : applyCustomGradientStyle(card, colors, gradient_opts, border_opts);
+        ? applySingleColorStyle(
+            card,
+            colors[0],
+            gradient_opts,
+            hover_opts,
+            card_opts
+          )
+        : applyCustomGradientStyle(
+            card,
+            colors,
+            gradient_opts,
+            hover_opts,
+            card_opts
+          );
 
-    styleElement.innerHTML = pseudoElementStyle;
-    document.head.appendChild(styleElement);
+    styleElement.innerHTML += pseudoElementStyle;
   }
 
   /**
    * Apply a single color style, which can be a style preset or a fixed color.
    */
-  function applySingleColorStyle(card, color, gradient_opts, border_opts) {
-    if (STYLES[color])
-      return applyPresetStyle(card, STYLES[color], gradient_opts, border_opts);
-    else return applyFixedColorStyle(card, color, border_opts);
+  function applySingleColorStyle(
+    card,
+    color,
+    gradient_opts,
+    hover_opts,
+    card_opts
+  ) {
+    return STYLES[color]
+      ? applyPresetStyle(
+          card,
+          STYLES[color],
+          gradient_opts,
+          hover_opts,
+          card_opts
+        )
+      : applyFixedColorStyle(card, color, hover_opts, card_opts);
   }
 
   /**
    * Apply a style preset.
    */
-  function applyPresetStyle(card, preset, gradient_opts, border_opts) {
+  function applyPresetStyle(
+    card,
+    preset,
+    gradient_opts,
+    hover_opts,
+    card_opts
+  ) {
     const { gradient, border } = preset;
     const { angle, animation } = gradient_opts;
-    const { color: borderColor, animation: borderAnimation } = border_opts;
+    const { color: borderColor, animation: borderAnimation } = hover_opts;
 
     // Update gradient options with preset defaults if not provided
     const updatedGradientOpts = {
@@ -364,7 +406,7 @@
     // Update border options with preset defaults if not provided
     const updatedBorderOpts = {
       color:
-        borderColor !== DEFAULTS.border_opts.color ? borderColor : border.color,
+        borderColor !== DEFAULTS.hover_opts.color ? borderColor : border.color,
       animation: borderAnimation || border.animation,
     };
 
@@ -372,35 +414,42 @@
       card,
       gradient.colors,
       updatedGradientOpts,
-      updatedBorderOpts
+      updatedBorderOpts,
+      card_opts
     );
   }
 
   /**
    * Apply a fixed color style.
    */
-  function applyFixedColorStyle(card, color, border_opts) {
-    setBorder(card, border_opts.color, border_opts.animation);
-    return getHotCardPseudoElementString(card, color);
+  function applyFixedColorStyle(card, color, hover_opts, card_opts) {
+    setBorder(card, hover_opts.color, hover_opts.animation);
+    return getHotCardPseudoElementString(card, card_opts, color);
   }
 
   /**
    * If there are more than one color, it's a custom gradient.
    */
-  function applyCustomGradientStyle(card, colors, gradient_opts, border_opts) {
+  function applyCustomGradientStyle(
+    card,
+    colors,
+    gradient_opts,
+    hover_opts,
+    card_opts
+  ) {
     const { type, angle, animation } = gradient_opts;
     const gradient = getGradient(type, angle, colors);
-    setBorder(card, border_opts.color, border_opts.animation);
-    return getHotCardPseudoElementString(card, gradient, animation);
+    setBorder(card, hover_opts.color, hover_opts.animation);
+    return getHotCardPseudoElementString(card, card_opts, gradient, animation);
   }
 
-  function setBorder(card, color, animation = "") {
-    animation = animation ? `pulse ${animation}` : "";
+  function setBorder(card, color, animation) {
+    const animationStr = animation ? `pulse ${animation}` : "";
     document
       .querySelectorAll(`.hot-${card.class} > .hot-border`)
-      .forEach((card) => {
-        card.style.setProperty("--border-color", color);
-        card.style.animation = animation;
+      .forEach((borderCard) => {
+        borderCard.style.setProperty("--border-color", color);
+        borderCard.style.animation = animationStr;
       });
   }
 
@@ -411,13 +460,17 @@
 
   function getHotCardPseudoElementString(
     card,
+    card_opts,
     background,
     gradientAnimation = "",
     filter = ""
   ) {
+    const opacity = getBackgroundOpacity(card_opts.opacity);
+    const fill = /true/i.test(card_opts.fill);
     const gradientAnimationStr = gradientAnimation
       ? `animation: move ${gradientAnimation};`
       : "";
+    const fillStr = fill ? `background-color: rgba(0, 0, 0, ${opacity});` : "";
     const filterStr = filter ? `filter: ${filter};` : "";
     const hotCardClass = `.hot-${card.class}`;
 
@@ -435,9 +488,16 @@
         background-position: 0 50%;
         ${gradientAnimationStr}
       }
+      ${hotCardClass} > .hot-border {
+        ${fillStr}
+      }
       ${hotCardClass}::after {
         ${filterStr}
       }`;
+  }
+
+  function getBackgroundOpacity(opacity) {
+    return parseFloat((1 - opacity / 100).toFixed(1));
   }
 
   function createCardStyle(
