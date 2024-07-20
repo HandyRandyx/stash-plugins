@@ -38,9 +38,9 @@ _[criterion]\_[value]\_[style]\_[gradient-opts]\_[hover-opts]\_[card-opts]_
 
 **Note**: _It is recommended to refresh the page once you are done configuring for the changes to take effect and the previous style to be overwritten._
 
-#### Regarding multiple values
+### Regarding multiple values
 
-The first matching condition found is applied, and subsequent matches are ignored. This ensures the highest priority condition takes precedence based on the left-to-right order of your declarations.
+In scenarios where multiple values are specified, the rules for how these values are processed can get complex. Below is a detailed explanation of how to handle multiple values, including Tag IDs and Rating Thresholds.
 
 #### 1. **Tag IDs**
 
@@ -59,8 +59,6 @@ Conversely, `t_202/201,202_blue/red`
 
 - A card with tag 202 will be painted blue, regardless of the presence of tag 201. Therefore, there will be no cards painted red.
 
-<br>
-
 #### 2. **Ratings**
 
 The same left-to-right prioritization applies.
@@ -69,11 +67,12 @@ Consider the declaration:
 
 `r_4/2_red/blue`
 
-- Red applies for ratings >= 4, and blue for ratings >= 2 but less than 4.
+- A card with a rating >= 4 will be painted red.
+- A card with a rating >= 2 but < 4 will be painted blue.
 
 <br>
 
-Multiple ratings are also supported, although it may not be very useful:
+You can also specify multiple ratings in a single value if you wish to target multiple specific ratings, though such scenarios are rare and generally not as useful. For instance:
 
 `r_2,4_blue`
 
