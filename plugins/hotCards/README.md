@@ -44,20 +44,20 @@ In scenarios where multiple values are specified, the rules for how these values
 
 1. **Tag IDs**
 
-  Corresponding styles _(style, gradient_opts, hover_opts, card_opts)_ are applied only if **ALL** tags in a set match.
+   Corresponding styles _(style, gradient_opts, hover_opts, card_opts)_ are applied only if **ALL** tags in a set match.
 
-  The tags are prioritized from **left to right**, meaning if it finds a match for a tag list, the corresponding style is applied and subsequent sets that may also match are ignored.
+   The tags are prioritized from **left to right**, meaning if it finds a match for a tag list, the corresponding style is applied and subsequent sets that may also match are ignored.
 
-  For example:
+   For example:
 
-  `t_201,202/202_red/blue`
+   `t_201,202/202_red/blue`
 
-  - A card with tags 201 and 202 will be painted red.
-  - A card with tag 202 will be painted blue (only if it does not have tag 201).
+   - A card with tags 201 and 202 will be painted red.
+   - A card with tag 202 will be painted blue (only if it does not have tag 201).
 
-  Conversely, `t_202/201,202_blue/red`
+   Conversely, `t_202/201,202_blue/red`
 
-  - A card with tag 202 will be painted blue, regardless of the presence of tag 201. Therefore, there will be no cards painted red.
+   - A card with tag 202 will be painted blue, regardless of the presence of tag 201. Therefore, there will be no cards painted red.
 
 2. **Ratings**
 
