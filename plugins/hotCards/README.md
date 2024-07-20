@@ -42,41 +42,41 @@ _[criterion]\_[value]\_[style]\_[gradient-opts]\_[hover-opts]\_[card-opts]_
 
 In scenarios where multiple values are specified, the rules for how these values are processed can get complex. Below is a detailed explanation of how to handle multiple values.
 
-#### 1. **Tag IDs**
+1. **Tag IDs**
 
-&nbsp;&nbsp;Corresponding styles _(style, gradient_opts, hover_opts, card_opts)_ are applied only if **ALL** tags in a set match.
+   Corresponding styles _(style, gradient_opts, hover_opts, card_opts)_ are applied only if **ALL** tags in a set match.
 
-&nbsp;&nbsp;The tags are prioritized from **left to right**, meaning if it finds a match for a tag list, the corresponding style is applied and subsequent sets that may also match are ignored.
+   The tags are prioritized from **left to right**, meaning if it finds a match for a tag list, the corresponding style is applied and subsequent sets that may also match are ignored.
 
-&nbsp;&nbsp;For example:
+   For example:
 
-&nbsp;&nbsp;`t_201,202/202_red/blue`
+   `t_201,202/202_red/blue`
 
-&nbsp;&nbsp;- A card with tags 201 and 202 will be painted red.
-&nbsp;&nbsp;- A card with tag 202 will be painted blue (only if it does not have tag 201).
+   - A card with tags 201 and 202 will be painted red.
+   - A card with tag 202 will be painted blue (only if it does not have tag 201).
 
-&nbsp;&nbsp;Conversely, `t_202/201,202_blue/red`
+   Conversely, `t_202/201,202_blue/red`
 
-&nbsp;&nbsp;- A card with tag 202 will be painted blue, regardless of the presence of tag 201. Therefore, there will be no cards painted red.
+   - A card with tag 202 will be painted blue, regardless of the presence of tag 201. Therefore, there will be no cards painted red.
 
-#### 2. **Ratings**
+2. **Ratings**
 
-&nbsp;&nbsp;The same left-to-right prioritization applies.
+   The same left-to-right prioritization applies.
 
-&nbsp;&nbsp;Consider the declaration:
+   Consider the declaration:
 
-&nbsp;`r_4/2_red/blue`
+   `r_4/2_red/blue`
 
-&nbsp;&nbsp;- A card with a rating >= 4 will be painted red.
-&nbsp;&nbsp;- A card with a rating >= 2 but < 4 will be painted blue.
+   - A card with a rating >= 4 will be painted red.
+   - A card with a rating >= 2 but < 4 will be painted blue.
 
-<br>
+   <br>
 
-&nbsp;&nbsp;You can also specify multiple ratings in a single value if you wish to target multiple specific ratings, though such scenarios are rare and generally not as useful. For instance:
+   You can also specify multiple ratings in a single value if you wish to target multiple specific ratings, though such scenarios are rare and generally not as useful. For instance:
 
-&nbsp;&nbsp;`r_2,4_blue`
+   `r_2,4_blue`
 
-&nbsp;&nbsp;- Targets cards with exact ratings of 4 or 2. Here, the order does not matter.
+   - Targets cards with exact ratings of 4 or 2. Here, the order does not matter.
 
 ## Examples
 
