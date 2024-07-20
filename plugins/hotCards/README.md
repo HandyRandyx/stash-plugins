@@ -44,40 +44,40 @@ The first matching condition found is applied, and subsequent matches are ignore
 
 1. **Tag IDs**
 
-  Corresponding styles _(style, gradient_opts, hover_opts, card_opts)_ are applied only if **ALL** tags in a set match.
+   Corresponding styles _(style, gradient_opts, hover_opts, card_opts)_ are applied only if **ALL** tags in a set match.
 
-  The tags are prioritized from **left to right**, meaning if it finds a match for a tag list, the corresponding style is applied and subsequent sets that may also match are ignored.
+   The tags are prioritized from **left to right**, meaning if it finds a match for a tag list, the corresponding style is applied and subsequent sets that may also match are ignored.
 
-  For example:
+   For example:
 
-  `t_201,202/202_red/blue`
+   `t_201,202/202_red/blue`
 
-  - A card with tags 201 and 202 will be painted red.
-  - A card with tag 202 will be painted blue (only if it does not have tag 201).
+   - A card with tags 201 and 202 will be painted red.
+   - A card with tag 202 will be painted blue (only if it does not have tag 201).
 
-  Conversely, `t_202/201,202_blue/red`
+   Conversely, `t_202/201,202_blue/red`
+ 
+   - A card with tag 202 will be painted blue, regardless of the presence of tag 201. Therefore, there will be no cards painted red.
 
-  - A card with tag 202 will be painted blue, regardless of the presence of tag 201. Therefore, there will be no cards painted red.
+   <br>
 
-  <br>
+2. **Ratings**
 
-  2. **Ratings**
+   The same left-to-right prioritization applies.
 
-  The same left-to-right prioritization applies.
+   Consider the declaration:
 
-  Consider the declaration:
+   `r_4/2_red/blue`
 
-  `r_4/2_red/blue`
+   - In this case, red applies for ratings >= 4, and blue for ratings >= 2 but less than 4.
 
-  - In this case, red applies for ratings >= 4, and blue for ratings >= 2 but less than 4.
+   <br>
 
-  <br>
+   Multiple ratings are also supported, although it may not be very useful:
 
-  Multiple ratings are also supported, although it may not be very useful:
+   `r_2,4_blue`
 
-  `r_2,4_blue`
-
-  - Targets cards with exact ratings of 4 or 2. Here the order does not matter.
+   - Targets cards with exact ratings of 4 or 2. Here the order does not matter.
 
 ## Examples
 
