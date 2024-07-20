@@ -42,42 +42,42 @@ _[criterion]\_[value]\_[style]\_[gradient-opts]\_[hover-opts]\_[card-opts]_
 
 The first matching condition found is applied, and subsequent matches are ignored. This ensures the highest priority condition takes precedence based on the left-to-right order of your declarations.
 
-1. **Tag IDs**
+#### 1. **Tag IDs**
 
-   Corresponding styles _(style, gradient_opts, hover_opts, card_opts)_ are applied only if **ALL** tags in a set match.
+Corresponding styles _(style, gradient_opts, hover_opts, card_opts)_ are applied only if **ALL** tags in a set match.
 
-   The tags are prioritized from **left to right**, meaning if it finds a match for a tag list, the corresponding style is applied and subsequent sets that may also match are ignored.
+The tags are prioritized from **left to right**, meaning if it finds a match for a tag list, the corresponding style is applied and subsequent sets that may also match are ignored.
 
-   For example:
+For example:
 
-   `t_201,202/202_red/blue`
+`t_201,202/202_red/blue`
 
-   - A card with tags 201 and 202 will be painted red.
-   - A card with tag 202 will be painted blue (only if it does not have tag 201).
+- A card with tags 201 and 202 will be painted red.
+- A card with tag 202 will be painted blue (only if it does not have tag 201).
 
-   Conversely, `t_202/201,202_blue/red`
- 
-   - A card with tag 202 will be painted blue, regardless of the presence of tag 201. Therefore, there will be no cards painted red.
+Conversely, `t_202/201,202_blue/red`
 
-   <br>
+- A card with tag 202 will be painted blue, regardless of the presence of tag 201. Therefore, there will be no cards painted red.
 
-2. **Ratings**
+<br>
 
-   The same left-to-right prioritization applies.
+#### 2. **Ratings**
 
-   Consider the declaration:
+The same left-to-right prioritization applies.
 
-   `r_4/2_red/blue`
+Consider the declaration:
 
-   - In this case, red applies for ratings >= 4, and blue for ratings >= 2 but less than 4.
+`r_4/2_red/blue`
 
-   <br>
+- Red applies for ratings >= 4, and blue for ratings >= 2 but less than 4.
 
-   Multiple ratings are also supported, although it may not be very useful:
+<br>
 
-   `r_2,4_blue`
+Multiple ratings are also supported, although it may not be very useful:
 
-   - Targets cards with exact ratings of 4 or 2. Here the order does not matter.
+`r_2,4_blue`
+
+- Targets cards with exact ratings of 4 or 2. Here, the order does not matter.
 
 ## Examples
 
